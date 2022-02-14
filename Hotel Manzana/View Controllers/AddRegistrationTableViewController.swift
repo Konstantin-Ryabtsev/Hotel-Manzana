@@ -27,8 +27,12 @@ class AddRegistrationTableViewController: UITableViewController {
     @IBOutlet weak var wifiSwitch: UISwitch!
     @IBOutlet weak var roomTypeLabel: UILabel!
     
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     // MARK: - Properties
+    var roomType: RoomType?
+    var registration = Registration()
+    
     let checkInDateLabelIndexPath = IndexPath(row: 0, section: 1)
     let checkInDatePickerIndexPath = IndexPath(row: 1, section: 1)
     let checkOutDateLabelIndexPath = IndexPath(row: 2, section: 1)
@@ -44,37 +48,42 @@ class AddRegistrationTableViewController: UITableViewController {
             checkOutDatePicker.isHidden = !isCheckOutDatePickerShown
         }
     }
-    var roomType: RoomType?
     
-    // MARK: - UIViewController Methods
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let midnightToday = Calendar.current.startOfDay(for: Date())
-        checkInDatePicker.minimumDate = midnightToday
-        checkInDatePicker.date = midnightToday
-        updateDateViews()
-        updateNumberOfGuests()
-        updateRoomType()
+    // MARK: - Methods
+    func checkCanSave() {
+        guard let roomType = roomType else {
+            saveButton.isEnabled = false
+            return
+        }
+        
+        let emailPattern = #"^\S+@\S+\.\S+$"#
+        
+        if firstNameTextField.text!.count == 0 || lastNameTextField.text!.count == 0 ||
+            emailTextField.text!.count == 0 || emailTextField.text?.range(of: emailPattern, options: .regularExpression) == nil ||
+            roomType.name.count == 0 {
+            saveButton.isEnabled = false
+        } else {
+            saveButton.isEnabled = true
+        }
     }
     
-    // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "SelectRoomType" else { return }
-        let destination = segue.destination as! SelectRoomTypeTableViewController
-        destination.delegate = self
-        destination.roomType = roomType
+    func saveRegistration() {
+        registration.firstName = firstNameTextField.text ?? ""
+        registration.lastName = lastNameTextField.text ?? ""
+        registration.emailAdress = emailTextField.text ?? ""
+        registration.checkInDate = checkInDatePicker.date
+        registration.checkOutDate = checkOutDatePicker.date
+        registration.numberOfAdults = Int(numberOfAdultsStepper.value)
+        registration.numberOfChildren = Int(numberOfChildrenStepper.value)
+        registration.roomType = roomType
+        registration.wifi = wifiSwitch.isOn
     }
     
-    // MARK: - UI Methods
     func updateDateViews() {
         checkOutDatePicker.minimumDate = checkInDatePicker.date.addingTimeInterval(60 * 60 * 24)
         
-        let dateFormater = DateFormatter()
-        dateFormater.dateStyle = .medium
-        dateFormater.locale = Locale.current
-        
-        checkInDateLabel.text = dateFormater.string(from: checkInDatePicker.date)
-        checkOutDateLabel.text = dateFormater.string(from: checkOutDatePicker.date)
+        checkInDateLabel.text = Registration.getFormatedDate(from: checkInDatePicker.date)
+        checkOutDateLabel.text = Registration.getFormatedDate(from: checkOutDatePicker.date)
     }
     
     func updateNumberOfGuests() {
@@ -91,6 +100,48 @@ class AddRegistrationTableViewController: UITableViewController {
         } else {
             roomTypeLabel.text = "Not Set"
         }
+        checkCanSave()
+    }
+    
+    func updateUI() {
+        firstNameTextField.text = registration.firstName
+        lastNameTextField.text = registration.lastName
+        emailTextField.text = registration.emailAdress
+        
+        checkInDatePicker.minimumDate = registration.checkInDate
+        checkInDatePicker.date = registration.checkInDate
+        checkOutDatePicker.date = registration.checkOutDate
+        
+        numberOfAdultsStepper.value = Double(registration.numberOfAdults)
+        numberOfChildrenStepper.value = Double(registration.numberOfChildren)
+        
+        wifiSwitch.isOn = registration.wifi
+        roomType = registration.roomType
+    }
+        
+    // MARK: - UIViewController Methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateUI()
+        updateDateViews()
+        updateNumberOfGuests()
+        updateRoomType()
+    }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "SelectRoomType":
+            let destination = segue.destination as! SelectRoomTypeTableViewController
+            destination.delegate = self
+            destination.roomType = roomType
+        case "SaveGuest":
+            saveRegistration()
+        case .none:
+            return
+        case .some(_):
+            return
+        }
     }
     
     // MARK: - Actions
@@ -98,33 +149,14 @@ class AddRegistrationTableViewController: UITableViewController {
         updateDateViews()
     }
     
-    @IBAction func doneBarButtonTapped(_ sender: UIBarButtonItem) {
-        let firstName = firstNameTextField.text ?? ""
-        let lastName = lastNameTextField.text ?? ""
-        let email = emailTextField.text ?? ""
-        let checkInDate = checkInDatePicker.date
-        let checkOutDate = checkOutDatePicker.date
-        let numberOfAdults = Int(numberOfAdultsStepper.value)
-        let numberOfChildren = Int(numberOfChildrenStepper.value)
-        let wifi = wifiSwitch.isOn
-                
-        let registration = Registration(
-            firstName: firstName,
-            lastName: lastName,
-            emailAdress: email,
-            checkInDate: checkInDate,
-            checkOutDate: checkOutDate,
-            numberOfAdults: numberOfAdults,
-            numberOfChildren: numberOfChildren,
-            roomType: roomType,
-            wifi: wifi
-        )
-        print(#line, #function, registration)
+    @IBAction func editingChanged(_ sender: UITextField) {
+        checkCanSave()
     }
     
     @IBAction func stepperValueChanged(_ sender: UIStepper) {
         updateNumberOfGuests()
     }
+    
 }
 
 // MARK: - UITableViewDataSource

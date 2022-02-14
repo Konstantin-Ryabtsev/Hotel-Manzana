@@ -5,7 +5,7 @@
 //  Created by Konstantin Ryabtsev on 12.02.2022.
 //
 
-struct RoomType {
+struct RoomType: Codable {
     var id: Int
     var name: String
     var shortName: String

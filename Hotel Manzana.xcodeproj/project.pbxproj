@@ -19,6 +19,10 @@
 		0AB371C827B741DD00DF3BAC /* SelectRoomTypeTableViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB371C727B741DD00DF3BAC /* SelectRoomTypeTableViewControllerProtocol.swift */; };
 		0AB371CA27B9221F00DF3BAC /* GuestListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB371C927B9221F00DF3BAC /* GuestListTableViewController.swift */; };
 		0AB371CD27BB099B00DF3BAC /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB371CC27BB099B00DF3BAC /* DataManager.swift */; };
+		0AB371D327BBCCEB00DF3BAC /* Screenshot04.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB371CF27BBCCEB00DF3BAC /* Screenshot04.png */; };
+		0AB371D427BBCCEB00DF3BAC /* Screenshot02.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB371D027BBCCEB00DF3BAC /* Screenshot02.png */; };
+		0AB371D527BBCCEB00DF3BAC /* Screenshot03.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB371D127BBCCEB00DF3BAC /* Screenshot03.png */; };
+		0AB371D627BBCCEB00DF3BAC /* Screenshot01.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB371D227BBCCEB00DF3BAC /* Screenshot01.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +40,10 @@
 		0AB371C727B741DD00DF3BAC /* SelectRoomTypeTableViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRoomTypeTableViewControllerProtocol.swift; sourceTree = "<group>"; };
 		0AB371C927B9221F00DF3BAC /* GuestListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestListTableViewController.swift; sourceTree = "<group>"; };
 		0AB371CC27BB099B00DF3BAC /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		0AB371CF27BBCCEB00DF3BAC /* Screenshot04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Screenshot04.png; sourceTree = "<group>"; };
+		0AB371D027BBCCEB00DF3BAC /* Screenshot02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Screenshot02.png; sourceTree = "<group>"; };
+		0AB371D127BBCCEB00DF3BAC /* Screenshot03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Screenshot03.png; sourceTree = "<group>"; };
+		0AB371D227BBCCEB00DF3BAC /* Screenshot01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Screenshot01.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +76,7 @@
 		0AB371A527B71F7700DF3BAC /* Hotel Manzana */ = {
 			isa = PBXGroup;
 			children = (
+				0AB371CE27BBCCEB00DF3BAC /* Screenshots */,
 				0AB371CB27BB098300DF3BAC /* Manager */,
 				0AB371C127B7238F00DF3BAC /* App */,
 				0AB371BA27B71FED00DF3BAC /* Model */,
@@ -133,6 +142,17 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
+		0AB371CE27BBCCEB00DF3BAC /* Screenshots */ = {
+			isa = PBXGroup;
+			children = (
+				0AB371CF27BBCCEB00DF3BAC /* Screenshot04.png */,
+				0AB371D027BBCCEB00DF3BAC /* Screenshot02.png */,
+				0AB371D127BBCCEB00DF3BAC /* Screenshot03.png */,
+				0AB371D227BBCCEB00DF3BAC /* Screenshot01.png */,
+			);
+			path = Screenshots;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -192,7 +212,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AB371B327B71F7B00DF3BAC /* LaunchScreen.storyboard in Resources */,
+				0AB371D327BBCCEB00DF3BAC /* Screenshot04.png in Resources */,
+				0AB371D527BBCCEB00DF3BAC /* Screenshot03.png in Resources */,
+				0AB371D627BBCCEB00DF3BAC /* Screenshot01.png in Resources */,
 				0AB371B027B71F7B00DF3BAC /* Assets.xcassets in Resources */,
+				0AB371D427BBCCEB00DF3BAC /* Screenshot02.png in Resources */,
 				0AB371AE27B71F7700DF3BAC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
